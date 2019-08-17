@@ -5,7 +5,7 @@ https://github.com/eldar/pose-tensorflow
 
 import logging, os
 import numpy as np
-from scipy.misc import imresize
+from PIL import Image
 import platform
 import matplotlib as mpl
 if os.environ.get('DLClight', default=False) == 'True':
@@ -61,7 +61,7 @@ def display_dataset():
                     continue
 
                 scmap_part = scmap[:,:,j]
-                scmap_part = imresize(scmap_part, 8.0, interp='nearest')
+                scmap_part = np.array(Image.fromarray(scmap_part).resize(8.0, Image.BICUBIC))
                 scmap_part = np.lib.pad(scmap_part, ((4, 0), (4, 0)), 'minimum')
 
                 curr_plot.set_title("{}".format(j+1))
